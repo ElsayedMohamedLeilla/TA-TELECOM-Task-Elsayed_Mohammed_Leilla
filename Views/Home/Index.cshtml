@@ -1,0 +1,126 @@
+﻿@model Elsayed_Mohammed_Leilla.Models.SendMessageViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+
+    var PhoneList = (List<Elsayed_Mohammed_Leilla.Models.MobileNumber>)ViewBag.PhoneList;
+}
+
+
+<style>
+    .myAlert-bottom {
+        position: fixed;
+        bottom: 5px;
+        left: 2%;
+        width: 96%;
+    }
+
+    div.fullscreen {
+        position: absolute;
+        width: 100%;
+        height: 960px;
+        top: 0;
+        left: 0;
+        background-color: lightblue;
+    }
+
+    .alert {
+        display: none;
+    }
+</style>
+
+<div class="row text-center text-uppercase">
+    <div class="myAlert-bottom alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>ok!</strong> @ViewBag.success
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("SendMessage", "Home",  FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <div class="row text-center">
+                    <div class="col-lg-12">
+                        <h4 class="text-center text-wrap">Message Text</h4>
+                        <hr />
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger col-lg-6" })
+
+                        <div class="form-group text-center col-md-12">
+                            @Html.LabelFor(model => model.MessageText, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-12">
+                                <textarea name="MessageText" class="form-control col-md-12" rows="5" cols="1000" id="MessageText"></textarea>
+                                @Html.ValidationMessageFor(model => model.MessageText, "", new { @class = "text-danger col-lg-12" })
+                            </div>
+                            @foreach (var item in PhoneList)
+                            {
+                                <input name="MobileNumberIds[]" type="text" hidden id="Number" value="@item.Id" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+
+                            <input type="submit" value="SEND MESSAGE" class="btn btn-sm btn-outline-success col-md-12" />
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+
+                    </div>
+
+                </div>
+
+                
+               
+
+                
+                <br />
+                @*<div class="borderd text-lowercase">
+                    <p>
+                        first step you have list of numbers [10] just write the message then click <span class="span-anottation">send message</span>
+                        so easy !!
+                    </p>
+                </div>*@
+            </div>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <h4>The 10 Mobile Numbers</h4>
+        <table class="table table-sm table-bordered table-striped text-center">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Phone</th>
+                    <th scope="col"  class="text-center">code</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in PhoneList)
+                {
+                    <tr>
+                        <td>@item.Number</td>
+                        <td>@item.Code</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        if (@ViewBag.success != null) {
+            $(".myAlert-bottom").show();
+            setTimeout(function () {
+                $(".myAlert-bottom").hide();
+            }, 2000);
+        }
+
+
+    </script>
+}
