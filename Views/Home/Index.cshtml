@@ -96,7 +96,14 @@
 
     </div>
     <div class="col-md-6">
+
         <h4>The 10 Mobile Numbers</h4>
+
+        @if (PhoneList.Count() == 0)
+        {
+    <h4>( No Data Found )</h4>
+        }
+
         <table class="table table-sm table-bordered table-striped text-center">
             <thead>
                 <tr>
@@ -110,21 +117,21 @@
 
                 @if (PhoneList.Count() == 0)
                 {
-                <tr>
+                    <tr>
 
-                    <td>No Data Found</td>
-                    <td>No Data Found</td>
+                        <td>No Data Found</td>
+                        <td>No Data Found</td>
 
-                </tr>
+                    </tr>
                 }
                 @foreach (var item in PhoneList)
                 {
-                <tr>
+                    <tr>
 
-                    <td>@item.Code</td>
-                    <td>@item.Number</td>
+                        <td>@item.Code</td>
+                        <td>@item.Number</td>
 
-                </tr>
+                    </tr>
                 }
             </tbody>
         </table>
