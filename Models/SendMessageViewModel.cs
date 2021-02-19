@@ -15,6 +15,7 @@ namespace Elsayed_Mohammed_Leilla.Models
         [MinLength(50, ErrorMessage = "Message Should Be 50 Char At Least")]
         public string MessageText { get; set; }
 
+        [Required]
         public List<int> MobileNumberIds { get; set; }
     }
 }
